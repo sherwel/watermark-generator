@@ -1,10 +1,10 @@
 # Python Watermark Generator
 
 ##Before:
-![alt tag](https://github.com/shivmalhotra/watermark-generator/tree/master/samples/before.png)
+![alt tag](https://github.com/shivmalhotra/watermark-generator/blob/master/samples/before.png)
 
 ##After:
-![alt tag](https://github.com/shivmalhotra/watermark-generator/tree/master/samples/watermark.jpg)
+![alt tag](https://github.com/shivmalhotra/watermark-generator/blob/master/samples/watermark.jpg)
 
 
 ## Installation
