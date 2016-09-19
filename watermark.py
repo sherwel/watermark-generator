@@ -10,9 +10,8 @@ import tkFileDialog
 from PIL import Image, ImageTk, ImageEnhance, ImageFont, ImageDraw
 import sys
 
-
-# textboxes to move watermark location
-# but for black or white
+#TO ADD:
+#textboxes to move watermark location
 
 class WaterMark(Frame):
     def __init__(self, master, image, image_name):
@@ -21,17 +20,18 @@ class WaterMark(Frame):
         self.image_name = image_name
 
         # make a blank image for the text, initialized to transparent text color
-        self.txt = Image.new('RGBA', self.image.size, (255,255,255,0))
+        self.blank_image = Image.new('RGBA', self.image.size, (255,255,255,0))
         self.fnt = ImageFont.truetype('MontereyFLF.ttf', 50)
-        self.d = ImageDraw.Draw(self.txt)
+        self.d = ImageDraw.Draw(self.blank_image)
 
+        #default watermark
         self.name = "watermark"
         self.loc_x = 0
         self.loc_y = 225
-        self.filler = (0,0,0,200)
-        self.d.text((self.loc_x, self.loc_y), self.name, font=self.fnt, fill=self.filler)
+        self.rgbo = (0,0,0,200)
+        self.d.text((self.loc_x, self.loc_y), self.name, font=self.fnt, fill=self.rgbo)
 
-        self.out = Image.alpha_composite(self.image, self.txt)
+        self.out = Image.alpha_composite(self.image, self.blank_image)
         self.tkim = ImageTk.PhotoImage(self.out)
 
         #display image
@@ -56,10 +56,10 @@ class WaterMark(Frame):
         b_save.pack()
 
     def update_color(self):    
-        if self.filler[0] == 255:
-            self.filler = (0,0,0,self.filler[3])
+        if self.rgbo[0] == 255:
+            self.rgbo = (0,0,0,self.rgbo[3])
         else:
-            self.filler = (255,255,255,self.filler[3])
+            self.rgbo = (255,255,255,self.rgbo[3])
         self.update()
 
     def update_text(self):
@@ -68,17 +68,16 @@ class WaterMark(Frame):
 
     def update_opacity(self, value):
         opacity = eval(value)
-        self.filler = (self.filler[0],self.filler[1],self.filler[2],opacity)
+        self.rgbo = (self.rgbo[0],self.rgbo[1],self.rgbo[2],opacity)
         self.update()
 
     def update(self):
-        self.txt = Image.new('RGBA', self.image.size, (255,255,255,0))
+        self.blank_image = Image.new('RGBA', self.image.size, (255,255,255,0))
         self.fnt = ImageFont.truetype('MontereyFLF.ttf', 50)
-        self.d = ImageDraw.Draw(self.txt)
-        self.d.text((self.loc_x, self.loc_y), self.name, font=self.fnt, fill=self.filler)
-        self.out = Image.alpha_composite(self.image, self.txt)
+        self.d = ImageDraw.Draw(self.blank_image)
+        self.d.text((self.loc_x, self.loc_y), self.name, font=self.fnt, fill=self.rgbo)
+        self.out = Image.alpha_composite(self.image, self.blank_image)
         self.tkim.paste(self.out)
-
 
     def save_image(self):
         #open original image
@@ -90,17 +89,18 @@ class WaterMark(Frame):
         y = (self.loc_y / float(self.image.size[1])) * im.size[1]
 
         #same as in init
-        txt = Image.new('RGBA', im.size, (255,255,255,0))
+        blank_image = Image.new('RGBA', im.size, (255,255,255,0))
         fnt = ImageFont.truetype('MontereyFLF.ttf', im.size[1]/10)
-        d = ImageDraw.Draw(txt)
-        d.text((x,y), self.name, font=fnt, fill=self.filler)
-        out = Image.alpha_composite(im, txt)
+        d = ImageDraw.Draw(blank_image)
+        d.text((x,y), self.name, font=fnt, fill=self.rgbo)
+        out = Image.alpha_composite(im, blank_image)
 
         out.save("watermark.jpg")
 
 
+#gui to open file from computer
 def openfile():
-
+         
     image_name = tkFileDialog.askopenfilename(parent=root)
     im = Image.open(image_name).convert('RGBA')
 
@@ -110,16 +110,20 @@ def openfile():
     
 
 ####main
-root = Tk()
-root.wm_title("watermark generator")
-root.geometry("800x1000")
+if __name__ == "__main__":
+     
+    ##set up root window
+    root = Tk()
+    root.wm_title("watermark generator")
+    root.geometry("800x1000")
 
-menubar = Menu(root)
-filemenu = Menu(menubar, tearoff=0)
-filemenu.add_command(label="Open", command=openfile)
-filemenu.add_separator()
-filemenu.add_command(label="Exit", command=root.quit)
-menubar.add_cascade(label="File", menu=filemenu)
+    ##set up menubar interface
+    menubar = Menu(root)
+    filemenu = Menu(menubar, tearoff=0)
+    filemenu.add_command(label="Open", command=openfile)
+    filemenu.add_separator()
+    filemenu.add_command(label="Exit", command=root.quit)
+    menubar.add_cascade(label="File", menu=filemenu)
 
-root.config(menu=menubar)
-root.mainloop()
+    root.config(menu=menubar)
+    root.mainloop()
