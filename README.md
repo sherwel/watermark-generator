@@ -8,6 +8,9 @@
 
 
 ## Installation
+
+Assumes python and virtualenv are already installed.
+
 `virtualenv venv`
 
 `source venv/bin/activate`

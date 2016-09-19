@@ -12,6 +12,7 @@ import sys
 
 #TO ADD:
 #textboxes to move watermark location
+#not overwrite if there is already a watermark.jpg saved
 
 class WaterMark(Frame):
     def __init__(self, master, image, image_name):
@@ -21,7 +22,7 @@ class WaterMark(Frame):
 
         # make a blank image for the text, initialized to transparent text color
         self.blank_image = Image.new('RGBA', self.image.size, (255,255,255,0))
-        self.fnt = ImageFont.truetype('MontereyFLF.ttf', 50)
+        self.fnt = ImageFont.truetype('fonts/MontereyFLF.ttf', 50)
         self.d = ImageDraw.Draw(self.blank_image)
 
         #default watermark
@@ -73,7 +74,7 @@ class WaterMark(Frame):
 
     def update(self):
         self.blank_image = Image.new('RGBA', self.image.size, (255,255,255,0))
-        self.fnt = ImageFont.truetype('MontereyFLF.ttf', 50)
+        self.fnt = ImageFont.truetype('fonts/MontereyFLF.ttf', 50)
         self.d = ImageDraw.Draw(self.blank_image)
         self.d.text((self.loc_x, self.loc_y), self.name, font=self.fnt, fill=self.rgbo)
         self.out = Image.alpha_composite(self.image, self.blank_image)
@@ -90,7 +91,7 @@ class WaterMark(Frame):
 
         #same as in init
         blank_image = Image.new('RGBA', im.size, (255,255,255,0))
-        fnt = ImageFont.truetype('MontereyFLF.ttf', im.size[1]/10)
+        fnt = ImageFont.truetype('fonts/MontereyFLF.ttf', im.size[1]/10)
         d = ImageDraw.Draw(blank_image)
         d.text((x,y), self.name, font=fnt, fill=self.rgbo)
         out = Image.alpha_composite(im, blank_image)
