@@ -5,3 +5,4 @@
 
 ##After:
 ![alt tag](https://github.com/shivmalhotra/watermark-generator/blob/master/watermark.jpg)
+
