@@ -19,3 +19,13 @@ Assumes python and virtualenv are already installed.
 
 ## Usage
 `python watermark.py`
+
+Open and find image to be watermarked.
+
+![alt tag](https://cloud.githubusercontent.com/assets/8575039/18678029/bcd37344-7f28-11e6-983b-6c14ce199650.png)
+
+![alt tag](https://cloud.githubusercontent.com/assets/8575039/18678030/bce2f3b4-7f28-11e6-9afa-ea53f841741b.png)
+
+Change text, color and opacity of watermak. Click save image and a copy of the image with a watermark will be saved.
+
+![alt tag](https://cloud.githubusercontent.com/assets/8575039/18678028/bcd2b972-7f28-11e6-9c93-547033b2f393.png)
